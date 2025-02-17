@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using FluentValidation;
 using Genealogy.Application.Models;
 
@@ -33,9 +32,7 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
         Response<bool> response = Response.ValidationError(exception);
-        string result = JsonSerializer.Serialize(response);
-
-        return context.Response.WriteAsync(result);
+        return context.Response.WriteAsJsonAsync(response);
     }
 
     private Task HandleGlobalExceptionAsync(HttpContext context, Exception exception)
@@ -45,8 +42,6 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
         Response<bool> response = Response.Error("Internal Server Error");
-        string result = JsonSerializer.Serialize(response);
-
-        return context.Response.WriteAsync(result);
+        return context.Response.WriteAsJsonAsync(response);
     }
 }

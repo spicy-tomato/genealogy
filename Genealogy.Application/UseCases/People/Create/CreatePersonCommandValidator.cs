@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Genealogy.Application.Extensions;
 using Genealogy.Domain.Enums;
 using Genealogy.Domain.Models;
 using JetBrains.Annotations;
@@ -29,8 +30,7 @@ public class CreatePersonCommandValidator : AbstractValidator<CreatePersonComman
         RuleForEach(c => c.Relationships).ChildRules(relationship =>
         {
             relationship.RuleFor(r => r.Key)
-                .Must(id => Guid.TryParse(id, out _))
-                .WithMessage("Invalid Person ID");
+                .IsGuid();
             relationship.RuleFor(r => r.Value)
                 .Must(x => _validRelationshipPair.Exists(d => d.Equals(x)) ||
                     _validRelationshipPair.Exists(d => d.Equals(x.Reversed())))

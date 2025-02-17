@@ -9,4 +9,6 @@ public interface IPersonRepository : IRepository
 
     Task<KeyValuePair<string, string>?> Connect(string personId1, Relationship relationship, string personId2,
         Relationship reversedRelationship);
+
+    Task<bool> Delete(string id);
 }

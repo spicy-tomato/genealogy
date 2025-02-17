@@ -61,8 +61,8 @@ internal class PersonRepository(IDriver driver, ILogger<PersonRepository> logger
         await using IAsyncSession? session = driver.AsyncSession();
         try
         {
-            IResultCursor? result = await session.RunAsync(query);
-            IRecord? record = await result.SingleAsync();
+            IResultCursor result = await session.RunAsync(query);
+            IRecord record = await result.SingleAsync();
             INode? husband = record["Husband"].As<INode>();
             INode? wife = record["Wife"].As<INode>();
 
@@ -72,6 +72,52 @@ internal class PersonRepository(IDriver driver, ILogger<PersonRepository> logger
         {
             logger.LogError(ex, "Error: {Message}", ex.Message);
             return null;
+        }
+    }
+
+    public async Task<bool> Delete(string id)
+    {
+        await using IAsyncSession? session = driver.AsyncSession();
+        IAsyncTransaction? tx = await session.BeginTransactionAsync();
+
+        try
+        {
+            const string textQuery =
+                """
+                MATCH (p:Person {id: $id})
+                WITH p, count(p) as cnt
+                DETACH DELETE p
+                RETURN cnt as count
+                """;
+
+            Query query = new(textQuery, new { id });
+
+            IResultCursor result = await tx.RunAsync(query);
+            IRecord record = await result.SingleAsync();
+            var count = record["count"].As<int>();
+
+            if (count == 0)
+            {
+                await tx.RollbackAsync();
+            }
+            else
+            {
+                await tx.CommitAsync();
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error: {Message}", ex.Message);
+
+            await tx.RollbackAsync();
+
+            return false;
+        }
+        finally
+        {
+            await session.CloseAsync();
         }
     }
 
@@ -90,8 +136,8 @@ internal class PersonRepository(IDriver driver, ILogger<PersonRepository> logger
             birthDate = person.BirthDate
         });
 
-        IResultCursor? result = await transaction.RunAsync(query);
-        IRecord? record = await result.SingleAsync();
+        IResultCursor result = await transaction.RunAsync(query);
+        IRecord record = await result.SingleAsync();
         INode? createdNode = record["p"].As<INode>();
 
         return (string)createdNode.Properties["id"];
