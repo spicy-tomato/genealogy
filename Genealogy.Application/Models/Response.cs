@@ -49,12 +49,7 @@ public static class Response
         return new Response<T>(message, errors);
     }
 
-    // public static Response<T> NotFound<T>(Guid id)
-    // {
-    //     return NotFound<T>("ID", id.ToString());
-    // }
-    //
-    // public static Response<T> NotFound<T>(string field, string value)
+    // public static Response<T> NotFound<T>(string value, string field="ID")
     // {
     //     return new Response<T>($"{typeof(T).Name} with {field}={value} was not found.");
     // }

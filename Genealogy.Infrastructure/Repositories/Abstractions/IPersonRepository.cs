@@ -1,8 +1,12 @@
-﻿using Genealogy.Domain.Models;
+﻿using Genealogy.Domain.Enums;
+using Genealogy.Domain.Models;
 
 namespace Genealogy.Infrastructure.Repositories.Abstractions;
 
 public interface IPersonRepository : IRepository
 {
-    Task<Guid?> Add(Person person);
+    Task<string?> Add(Person person);
+
+    Task<KeyValuePair<string, string>?> Connect(string personId1, Relationship relationship1, string personId2,
+        Relationship relationship2);
 }

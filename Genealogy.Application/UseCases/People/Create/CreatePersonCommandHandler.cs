@@ -8,17 +8,17 @@ namespace Genealogy.Application.UseCases.People.Create;
 
 public class CreatePersonCommandHandler(IPersonRepository personRepository,
     IRequestValidator<CreatePersonCommand> validator)
-    : IRequestHandler<CreatePersonCommand, Response<Guid>>
+    : IRequestHandler<CreatePersonCommand, Response<string>>
 {
-    public async Task<Response<Guid>> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
+    public async Task<Response<string>> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         await validator.Validate(request);
 
         Person person = Person.Create(request.Name, request.BirthDate);
-        Guid? id = await personRepository.Add(person);
+        string? createdUserId = await personRepository.Add(person);
 
-        return id != null
-            ? Response.Succeed(id.Value)
-            : Response.Error<Guid>("Cannot create person");
+        return createdUserId != null
+            ? Response.Succeed(createdUserId)
+            : Response.Error<string>("Cannot create person");
     }
 }
