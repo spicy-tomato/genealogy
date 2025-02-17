@@ -14,7 +14,7 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository,
     {
         await validator.Validate(request);
 
-        Person person = Person.Create(request.Name, request.BirthDate);
+        Person person = Person.Create(request.Name, request.BirthDate, request.Relationships);
         string? createdUserId = await personRepository.Add(person);
 
         return createdUserId != null

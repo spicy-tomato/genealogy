@@ -7,6 +7,6 @@ public interface IPersonRepository : IRepository
 {
     Task<string?> Add(Person person);
 
-    Task<KeyValuePair<string, string>?> Connect(string personId1, Relationship relationship1, string personId2,
-        Relationship relationship2);
+    Task<KeyValuePair<string, string>?> Connect(string personId1, Relationship relationship, string personId2,
+        Relationship reversedRelationship);
 }

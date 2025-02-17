@@ -4,10 +4,10 @@
     build:
       context: .
       dockerfile: Genealogy.API/Dockerfile
-  
+
   database:
     image: neo4j:5.26.2
-    container_name: genealogy.api
+    container_name: genealogy.db
     ports:
       - "7474:7474"   # Neo4j Browser interface
       - "7687:7687"   # Bolt protocol for drivers

@@ -34,7 +34,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapPost("person", async (ISender sender, CreatePersonRequest request) =>
 {
-    CreatePersonCommand command = new(request.Name, request.BirthDate);
+    CreatePersonCommand command = new(request.Name, request.BirthDate, request.Relationships);
     Response<string> result = await sender.Send(command);
 
     return result;
