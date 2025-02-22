@@ -1,23 +1,28 @@
-﻿namespace Genealogy.Domain.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
+namespace Genealogy.Domain.Models;
+
+[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public class Person
 {
-    private Person(string name, DateTime birthDate, Dictionary<string, PersonRelationshipDetails> relationships)
+    public Person()
+    {
+    }
+
+    private Person(string name, DateTime birthDate)
     {
         Id = Guid.NewGuid().ToString();
         Name = name;
         BirthDate = birthDate;
-        Relationships = relationships;
     }
 
-    public string Id { get; }
-    public string Name { get; }
-    public DateTime BirthDate { get; }
-    public Dictionary<string, PersonRelationshipDetails> Relationships { get; set; } = new();
+    public string Id { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public DateTime BirthDate { get; set; }
 
-    public static Person Create(string name, string birthDate,
-        Dictionary<string, PersonRelationshipDetails> relationships)
+    public static Person Create(string name, string birthDate)
     {
-        return new Person(name, DateTime.Parse(birthDate), relationships);
+        return new Person(name, DateTime.Parse(birthDate));
     }
 }

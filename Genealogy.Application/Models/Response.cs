@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Genealogy.Infrastructure.Exceptions;
 using JetBrains.Annotations;
 
 namespace Genealogy.Application.Models;

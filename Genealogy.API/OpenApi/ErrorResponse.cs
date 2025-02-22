@@ -1,4 +1,4 @@
-﻿using Genealogy.Application.Models;
+﻿using Genealogy.Infrastructure.Exceptions;
 
 namespace Genealogy.API.OpenApi;
 

@@ -2,6 +2,8 @@
 
 public enum Relationship
 {
-    Husband = 1,
-    Wife = 2
+    Spouse = 1,
+    DivorceSpouse = 2,
+    Child = 3,
+    AdoptedChild = 4
 }

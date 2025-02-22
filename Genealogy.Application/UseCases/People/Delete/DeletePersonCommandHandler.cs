@@ -12,10 +12,8 @@ public class DeletePersonCommandHandler(IPersonRepository repository, IRequestVa
     {
         await validator.Validate(request);
 
-        bool deletedSuccess = await repository.Delete(request.Id);
+        await repository.DeleteAsync(request.Id);
 
-        return deletedSuccess
-            ? Response.Succeed(true)
-            : Response.Error<bool>("Cannot delete person");
+        return Response.Succeed(true);
     }
 }

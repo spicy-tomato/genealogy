@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Genealogy.Application.Extensions;
 using Genealogy.Domain.Enums;
-using Genealogy.Domain.Models;
 using JetBrains.Annotations;
 
 namespace Genealogy.Application.UseCases.People.Create;
@@ -9,11 +8,6 @@ namespace Genealogy.Application.UseCases.People.Create;
 [UsedImplicitly(ImplicitUseKindFlags.Access)]
 public class CreatePersonCommandValidator : AbstractValidator<CreatePersonCommand>
 {
-    private readonly List<PersonRelationshipDetails> _validRelationshipPair =
-    [
-        new(Relationship.Husband, Relationship.Wife)
-    ];
-
     public CreatePersonCommandValidator()
     {
         RuleFor(c => c.Name)
@@ -27,14 +21,18 @@ public class CreatePersonCommandValidator : AbstractValidator<CreatePersonComman
             .Must(bd => DateTime.TryParse(bd, out _))
             .WithMessage("Invalid Birth Date");
 
-        RuleForEach(c => c.Relationships).ChildRules(relationship =>
-        {
-            relationship.RuleFor(r => r.Key)
-                .IsGuid();
-            relationship.RuleFor(r => r.Value)
-                .Must(x => _validRelationshipPair.Exists(d => d.Equals(x)) ||
-                    _validRelationshipPair.Exists(d => d.Equals(x.Reversed())))
-                .WithMessage("Invalid Relationship");
-        });
+        RuleFor(c => c.AnotherPersonIds)
+            .Must(ids => ids != null && ids.Any() && ids.Count <= 2)
+            .WithMessage("One or two person IDs must be provided")
+            .When(c => c.Relationship != null);
+
+        RuleFor(c => c.AnotherPersonIds)
+            .Must(ids => ids is { Count: 1 })
+            .WithMessage(
+                $"One person ID must be provided when relationship is {nameof(Relationship.Spouse)} or {nameof(Relationship.DivorceSpouse)}")
+            .When(c => c.Relationship is Relationship.Spouse or Relationship.DivorceSpouse);
+
+        RuleForEach(c => c.AnotherPersonIds)
+            .IsGuid();
     }
 }

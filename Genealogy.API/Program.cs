@@ -4,9 +4,9 @@ using Genealogy.API.Middlewares;
 using Genealogy.API.OpenApi;
 using Genealogy.Application;
 using Genealogy.Application.Models;
-using Genealogy.Application.UseCases.People.Connect;
 using Genealogy.Application.UseCases.People.Create;
 using Genealogy.Application.UseCases.People.Delete;
+using Genealogy.Application.UseCases.Relationships.Update;
 using Genealogy.Infrastructure;
 using MediatR;
 using Scalar.AspNetCore;
@@ -52,7 +52,8 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapPost("person", async (ISender sender, CreatePersonRequest request) =>
     {
-        CreatePersonCommand command = new(request.Name, request.BirthDate, request.Relationships);
+        CreatePersonCommand command = new(request.Name, request.BirthDate, request.Relationship,
+            request.AnotherPersonIds);
         Response<string> result = await sender.Send(command);
 
         return result;
@@ -60,15 +61,6 @@ app.MapPost("person", async (ISender sender, CreatePersonRequest request) =>
     .ProducesOk<string>()
     .ProducesBadRequest()
     .WithDescription("Add a person");
-
-app.MapPost("person/connect", async (ISender sender, ConnectPeopleRequest request) =>
-    {
-        ConnectPeopleCommand command = new(request.From, request.Relationship, request.To);
-        Response<KeyValuePair<string, string>> result = await sender.Send(command);
-
-        return result;
-    })
-    .WithDescription("Connect two existing people");
 
 app.MapDelete("person/{id}", async ([Description("Person ID to delete")] string id, ISender sender) =>
     {
@@ -79,5 +71,14 @@ app.MapDelete("person/{id}", async ([Description("Person ID to delete")] string 
     })
     .WithDescription("Delete a person")
     .Produces(StatusCodes.Status400BadRequest);
+
+app.MapPatch("relationship", async (ISender sender, UpdateRelationshipRequest request) =>
+    {
+        UpdateRelationshipCommand command = new(request.Person1, request.Person2, request.ChangeType);
+        Response<KeyValuePair<string, string>> result = await sender.Send(command);
+
+        return result;
+    })
+    .WithDescription("Connect two existing people");
 
 app.Run();

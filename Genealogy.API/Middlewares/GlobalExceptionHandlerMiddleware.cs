@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using FluentValidation;
 using Genealogy.Application.Models;
+using Genealogy.Infrastructure.Exceptions;
 
 namespace Genealogy.API.Middlewares;
 
@@ -12,18 +13,21 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
         {
             await next(context);
         }
-        catch (Exception ex)
+        catch (ValidationException e)
         {
-            context.Response.ContentType = "application/json";
-
-            if (ex is ValidationException validationException)
-            {
-                await HandleValidationExceptionAsync(context, validationException);
-            }
-            else
-            {
-                await HandleGlobalExceptionAsync(context, ex);
-            }
+            await HandleValidationExceptionAsync(context, e);
+        }
+        catch (Exception e) when (e is UserFriendlyException friendlyException)
+        {
+            await HandleUserFriendlyExceptionAsync(context, friendlyException);
+        }
+        catch (Exception e)
+        {
+            await HandleGlobalExceptionAsync(context, e);
+        }
+        finally
+        {
+            context.Response.ContentType ??= "application/json";
         }
     }
 
@@ -35,13 +39,21 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
         return context.Response.WriteAsJsonAsync(response);
     }
 
+    private static Task HandleUserFriendlyExceptionAsync(HttpContext context, UserFriendlyException exception)
+    {
+        context.Response.StatusCode = exception.StatusCode;
+
+        Response<bool> response = Response.Error(exception.Message, exception.Error);
+        return context.Response.WriteAsJsonAsync(response);
+    }
+
     private Task HandleGlobalExceptionAsync(HttpContext context, Exception exception)
     {
         logger.LogError(exception, "Unhandled error");
 
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        Response<bool> response = Response.Error("Internal Server Error");
+        Response<bool> response = Response.Error("Some errors occurred");
         return context.Response.WriteAsJsonAsync(response);
     }
 }
