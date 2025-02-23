@@ -2,7 +2,7 @@
 using Genealogy.Domain.Enums;
 using MediatR;
 
-namespace Genealogy.Application.UseCases.People.Create;
+namespace Genealogy.Application.UseCases.People.Commands.Create;
 
 public record CreatePersonCommand(
     string Name,

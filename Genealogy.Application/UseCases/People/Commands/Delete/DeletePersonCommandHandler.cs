@@ -3,7 +3,7 @@ using Genealogy.Application.Services.Abstractions;
 using Genealogy.Infrastructure.Repositories.Abstractions;
 using MediatR;
 
-namespace Genealogy.Application.UseCases.People.Delete;
+namespace Genealogy.Application.UseCases.People.Commands.Delete;
 
 public class DeletePersonCommandHandler(IPersonRepository repository, IRequestValidator<DeletePersonCommand> validator)
     : IRequestHandler<DeletePersonCommand, Response<bool>>

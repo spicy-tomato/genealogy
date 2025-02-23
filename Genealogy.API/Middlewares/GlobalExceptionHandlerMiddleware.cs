@@ -1,5 +1,4 @@
-﻿using System.Net;
-using FluentValidation;
+﻿using FluentValidation;
 using Genealogy.Application.Models;
 using Genealogy.Infrastructure.Exceptions;
 
@@ -33,7 +32,7 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
 
     private static Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
     {
-        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
         Response<bool> response = Response.ValidationError(exception);
         return context.Response.WriteAsJsonAsync(response);
@@ -41,7 +40,7 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
 
     private static Task HandleUserFriendlyExceptionAsync(HttpContext context, UserFriendlyException exception)
     {
-        context.Response.StatusCode = exception.StatusCode;
+        context.Response.StatusCode = exception.StatusCode ?? StatusCodes.Status400BadRequest;
 
         Response<bool> response = Response.Error(exception.Message, exception.Error);
         return context.Response.WriteAsJsonAsync(response);
@@ -51,7 +50,7 @@ public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMidd
     {
         logger.LogError(exception, "Unhandled error");
 
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
         Response<bool> response = Response.Error("Some errors occurred");
         return context.Response.WriteAsJsonAsync(response);

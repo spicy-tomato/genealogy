@@ -3,7 +3,7 @@ using Genealogy.Application.Services.Abstractions;
 using Genealogy.Infrastructure.Repositories.Abstractions;
 using MediatR;
 
-namespace Genealogy.Application.UseCases.Families.Update;
+namespace Genealogy.Application.UseCases.Families.Commands.Update;
 
 public class UpdateFamilyCommandHandler(IFamilyRepository familyRepository,
     IRequestValidator<UpdateFamilyCommand> validator)

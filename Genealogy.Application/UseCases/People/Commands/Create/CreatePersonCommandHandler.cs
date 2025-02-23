@@ -5,7 +5,7 @@ using Genealogy.Infrastructure.Repositories.Abstractions;
 using Genealogy.Infrastructure.Services.Abstractions;
 using MediatR;
 
-namespace Genealogy.Application.UseCases.People.Create;
+namespace Genealogy.Application.UseCases.People.Commands.Create;
 
 public class CreatePersonCommandHandler(IFamilyService familyService, IPersonRepository personRepository,
     IRequestValidator<CreatePersonCommand> validator)
@@ -23,7 +23,7 @@ public class CreatePersonCommandHandler(IFamilyService familyService, IPersonRep
         }
         else
         {
-            createdUserId = await familyService.AddPerson(person, request.Relationship.Value, 
+            createdUserId = await familyService.AddPerson(person, request.Relationship.Value,
                 request.AnotherPersonIds!);
         }
 

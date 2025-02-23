@@ -1,7 +1,7 @@
 ﻿using Genealogy.Domain.Enums;
 using JetBrains.Annotations;
 
-namespace Genealogy.Application.UseCases.People.Create;
+namespace Genealogy.Application.UseCases.People.Commands.Create;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class CreatePersonRequest

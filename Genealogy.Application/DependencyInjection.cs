@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using Genealogy.Application.Services.Abstractions;
 using Genealogy.Application.Services.Implementations;
-using Genealogy.Application.UseCases.People.Create;
+using Genealogy.Application.UseCases.People.Commands.Create;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class DependencyInjection
         return builder;
     }
 
+    [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public static WebApplicationBuilder AddFluentValidation(this WebApplicationBuilder builder)
     {
         builder.Services.AddValidatorsFromAssemblyContaining<CreatePersonCommandValidator>();

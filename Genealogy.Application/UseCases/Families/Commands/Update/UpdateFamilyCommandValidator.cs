@@ -2,7 +2,7 @@
 using Genealogy.Application.Extensions;
 using JetBrains.Annotations;
 
-namespace Genealogy.Application.UseCases.Families.Update;
+namespace Genealogy.Application.UseCases.Families.Commands.Update;
 
 [UsedImplicitly(ImplicitUseKindFlags.Access)]
 public class UpdateFamilyCommandValidator : AbstractValidator<UpdateFamilyCommand>

@@ -3,7 +3,7 @@ using Genealogy.Application.Extensions;
 using Genealogy.Domain.Enums;
 using JetBrains.Annotations;
 
-namespace Genealogy.Application.UseCases.People.Create;
+namespace Genealogy.Application.UseCases.People.Commands.Create;
 
 [UsedImplicitly(ImplicitUseKindFlags.Access)]
 public class CreatePersonCommandValidator : AbstractValidator<CreatePersonCommand>

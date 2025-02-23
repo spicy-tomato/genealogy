@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCases\People\Commands\" />
+    </ItemGroup>
+
 </Project>

@@ -45,6 +45,7 @@ public static class Response
         return new Response<T>(data, message);
     }
 
+    [UsedImplicitly]
     public static Response<T> Error<T>(string message, IEnumerable<Error>? errors = null)
     {
         return new Response<T>(message, errors);

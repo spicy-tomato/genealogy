@@ -1,7 +1,7 @@
 ﻿using Genealogy.Infrastructure.Dtos.Family;
 using JetBrains.Annotations;
 
-namespace Genealogy.Application.UseCases.Families.Update;
+namespace Genealogy.Application.UseCases.Families.Commands.Update;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class UpdateFamilyRequest
