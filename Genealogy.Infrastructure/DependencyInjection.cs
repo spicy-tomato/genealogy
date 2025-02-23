@@ -4,7 +4,6 @@ using Genealogy.Infrastructure.Services.Abstractions;
 using Genealogy.Infrastructure.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Neo4j.Driver;
 using Neo4jClient;
 using Newtonsoft.Json.Serialization;
 

@@ -1,5 +1,7 @@
 ﻿using Genealogy.Domain.Enums;
 using Genealogy.Domain.Models;
+using Genealogy.Infrastructure.Dtos.Family;
+using Genealogy.Infrastructure.Exceptions;
 using Genealogy.Infrastructure.Repositories.Abstractions;
 using Neo4jClient;
 using Neo4jClient.Cypher;
@@ -47,7 +49,7 @@ internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
         {
             return existingSingleFamily.Id;
         }
-            
+
         const string parent = nameof(FamilyRelationship.Parent);
         Family family = Family.Create();
 
@@ -90,6 +92,23 @@ internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
             .Where<Family>(family => family.Id == familyId)
             .AndWhere<Person>(person => person.Id == personId)
             .Merge($"(person)-[:{child}]->(family)");
+
+        await query.ExecuteWithoutResultsAsync();
+    }
+
+    public async Task Update(string personId1, string personId2, UpdateFamilyDto updateFamilyDto)
+    {
+        Family? existingFamily = await GetFamilyAsync(personId1, personId2);
+        if (existingFamily == null)
+        {
+            throw NotFoundException.Create($"{nameof(Family)} relationship is not found.");
+        }
+
+        ICypherFluentQuery query = client.Cypher
+            .Match("(family:Family)")
+            .Where<Family>(family => family.Id == existingFamily.Id)
+            .Set("family.isDivorced=$isDivorced")
+            .WithParam("isDivorced", updateFamilyDto.IsDivorced);
 
         await query.ExecuteWithoutResultsAsync();
     }

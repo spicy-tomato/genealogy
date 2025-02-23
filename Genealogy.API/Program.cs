@@ -4,9 +4,9 @@ using Genealogy.API.Middlewares;
 using Genealogy.API.OpenApi;
 using Genealogy.Application;
 using Genealogy.Application.Models;
+using Genealogy.Application.UseCases.Families.Update;
 using Genealogy.Application.UseCases.People.Create;
 using Genealogy.Application.UseCases.People.Delete;
-using Genealogy.Application.UseCases.Relationships.Update;
 using Genealogy.Infrastructure;
 using MediatR;
 using Scalar.AspNetCore;
@@ -72,10 +72,10 @@ app.MapDelete("person/{id}", async ([Description("Person ID to delete")] string 
     .WithDescription("Delete a person")
     .Produces(StatusCodes.Status400BadRequest);
 
-app.MapPatch("relationship", async (ISender sender, UpdateRelationshipRequest request) =>
+app.MapPatch("family", async (ISender sender, UpdateFamilyRequest request) =>
     {
-        UpdateRelationshipCommand command = new(request.Person1, request.Person2, request.ChangeType);
-        Response<KeyValuePair<string, string>> result = await sender.Send(command);
+        UpdateFamilyCommand command = new(request.Person1, request.Person2, request.Family);
+        Response<bool> result = await sender.Send(command);
 
         return result;
     })
