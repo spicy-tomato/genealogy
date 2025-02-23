@@ -16,10 +16,21 @@ internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRep
 {
     public async Task<string> AddPerson(Person person, Relationship relationship, IList<string> anotherPersonIds)
     {
+        List<string>? idsNotExisted = await personRepository.GetIdsNotExistedAsync(anotherPersonIds);
+        if (idsNotExisted != null && idsNotExisted.Count != 0)
+        {
+            throw NotFoundException.WithId<Person>(idsNotExisted);
+        }
+
         using ITransaction transaction = client.BeginTransaction();
 
         try
         {
+            if (relationship == Relationship.Parent)
+            {
+                person.MarkAsRoot();
+            }
+
             await personRepository.CreateAsync(person);
             await Connect(person.Id, relationship, anotherPersonIds);
 
@@ -39,12 +50,6 @@ internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRep
 
     private async Task Connect(string personId, Relationship relationship, IList<string> anotherPersonIds)
     {
-        List<string>? idsNotExisted = await personRepository.GetIdsNotExistedAsync(anotherPersonIds);
-        if (idsNotExisted != null && idsNotExisted.Count != 0)
-        {
-            throw NotFoundException.WithId<Person>(idsNotExisted);
-        }
-
         switch (relationship)
         {
             case Relationship.Spouse:
@@ -58,6 +63,9 @@ internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRep
                 break;
             case Relationship.AdoptedChild:
                 await ConnectAsChild(personId, anotherPersonIds, true);
+                break;
+            case Relationship.Parent:
+                await ConnectAsParent(personId, anotherPersonIds.First());
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(relationship));
@@ -81,9 +89,24 @@ internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRep
         }
     }
 
+    private async Task ConnectAsParent(string personId, string childId)
+    {
+        Person? child = await personRepository.GetByIdAsync(childId);
+        if (child is not { IsRoot: true })
+        {
+            throw BadRequestException.Create("Cannot add parent for un-root person");
+        }
+
+        string newSingleFamilyId = await familyRepository.CreateAsync(personId);
+
+        await familyRepository.AddPersonAsync(newSingleFamilyId, childId, false);
+
+        await personRepository.UnmarkAsRootAsync(childId);
+    }
+
     private async Task ConnectAsChild(string personId, string parentId, bool isAdopted)
     {
-        Family? singleFamily = await familyRepository.GetSingleFamilyAsync(parentId);
+        Family? singleFamily = await familyRepository.GetSingleByParentsIdAsync(parentId);
 
         if (singleFamily != null)
         {
@@ -99,7 +122,7 @@ internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRep
 
     private async Task ConnectAsChild(string personId, string parentId1, string parentId2, bool isAdopted)
     {
-        Family? family = await familyRepository.GetFamilyAsync(parentId1, parentId2);
+        Family? family = await familyRepository.GetByParentsIdAsync(parentId1, parentId2);
         if (family == null)
         {
             throw NotFoundException.Create($"{nameof(Family)} relationship is not found.");

@@ -1,4 +1,4 @@
-﻿using Genealogy.Infrastructure.Dtos.Family;
+﻿using Genealogy.Infrastructure.Dtos.Families;
 using JetBrains.Annotations;
 
 namespace Genealogy.Application.UseCases.Families.Commands.Update;

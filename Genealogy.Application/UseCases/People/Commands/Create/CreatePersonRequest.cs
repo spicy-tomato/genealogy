@@ -6,8 +6,8 @@ namespace Genealogy.Application.UseCases.People.Commands.Create;
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class CreatePersonRequest
 {
-    public string Name { get; set; } = null!;
-    public string BirthDate { get; set; } = null!;
+    public required string Name { get; set; }
+    public required string BirthDate { get; set; }
     public Relationship? Relationship { get; set; }
     public IList<string>? AnotherPersonIds { get; set; }
 }
