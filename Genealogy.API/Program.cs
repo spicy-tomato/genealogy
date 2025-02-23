@@ -50,6 +50,18 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
+app.MapGet("person", async (ISender sender) =>
+    {
+        // CreatePersonCommand command = new(request.Name, request.BirthDate, request.Relationship,
+        //     request.AnotherPersonIds);
+        // Response<string> result = await sender.Send(command);
+
+        // return result;
+    })
+    .ProducesOk<string>()
+    .ProducesBadRequest()
+    .WithDescription("Add a person");
+
 app.MapPost("person", async (ISender sender, CreatePersonRequest request) =>
     {
         CreatePersonCommand command = new(request.Name, request.BirthDate, request.Relationship,
