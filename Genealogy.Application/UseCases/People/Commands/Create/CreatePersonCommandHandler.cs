@@ -1,5 +1,5 @@
-﻿using Genealogy.Application.Models;
-using Genealogy.Application.Services.Abstractions;
+﻿using FluentValidation;
+using Genealogy.Application.Models;
 using Genealogy.Domain.Models;
 using Genealogy.Infrastructure.Repositories.Abstractions;
 using Genealogy.Infrastructure.Services.Abstractions;
@@ -8,12 +8,12 @@ using MediatR;
 namespace Genealogy.Application.UseCases.People.Commands.Create;
 
 public class CreatePersonCommandHandler(IFamilyService familyService, IPersonRepository personRepository,
-    IRequestValidator<CreatePersonCommand> validator)
+    IValidator<CreatePersonCommand> validator)
     : IRequestHandler<CreatePersonCommand, Response<string>>
 {
     public async Task<Response<string>> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
-        await validator.Validate(request);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
 
         Person person = Person.Create(request.Name, request.BirthDate);
         string createdUserId;
