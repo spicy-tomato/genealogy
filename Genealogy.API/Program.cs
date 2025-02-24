@@ -7,7 +7,9 @@ using Genealogy.Application.Models;
 using Genealogy.Application.UseCases.Families.Commands.Update;
 using Genealogy.Application.UseCases.People.Commands.Create;
 using Genealogy.Application.UseCases.People.Commands.Delete;
+using Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;
 using Genealogy.Infrastructure;
+using Genealogy.Infrastructure.Dtos.People;
 using MediatR;
 using Scalar.AspNetCore;
 
@@ -49,6 +51,17 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+app.MapGet("person", async (ISender sender, string? rootId, int? depth) =>
+    {
+        GetRelatedByPersonIdQuery command = new(rootId, depth ?? 5);
+        Response<GetRelatedPersonResult> result = await sender.Send(command);
+
+        return result;
+    })
+    .ProducesOk<string>()
+    .ProducesBadRequest()
+    .WithDescription("Get people by root");
 
 app.MapPost("person", async (ISender sender, CreatePersonRequest request) =>
     {
