@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Text.Json;
+using Genealogy.API.Auth;
 using Genealogy.API.Middlewares;
 using Genealogy.API.OpenApi;
 using Genealogy.Application;
@@ -16,6 +17,8 @@ using Scalar.AspNetCore;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder
+    // API
+    .AddAuth()
     // Infrastructure
     .AddNeo4J()
     .AddRepositories()
@@ -47,6 +50,9 @@ if (app.Environment.IsDevelopment())
         ];
     });
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
