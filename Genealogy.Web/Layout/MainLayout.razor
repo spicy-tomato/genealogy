@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudAppBar Dense="true" Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"/>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+    </MudAppBar>
+    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h5" Class="mt-1">Application</MudText>
+        </MudDrawerHeader>
+        @*NavMenu*@
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@* Required *@
+<MudThemeProvider/>
+<MudPopoverProvider/>
+
+@* Needed for dialogs *@
+@* <MudDialogProvider /> *@
+
+@* Needed for snackbars *@
+@* <MudSnackbarProvider /> *@
