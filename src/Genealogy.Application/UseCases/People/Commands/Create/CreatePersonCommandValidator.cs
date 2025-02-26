@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Genealogy.Application.Extensions;
-using Genealogy.Domain.Enums;
+using Genealogy.Domain.Neo4j.Enums;
 using JetBrains.Annotations;
 
 namespace Genealogy.Application.UseCases.People.Commands.Create;

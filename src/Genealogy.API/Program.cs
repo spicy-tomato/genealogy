@@ -11,6 +11,7 @@ using Genealogy.Application.UseCases.People.Commands.Delete;
 using Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;
 using Genealogy.Infrastructure.Neo4j;
 using Genealogy.Infrastructure.Neo4j.Dtos.People;
+using Genealogy.Infrastructure.Postgres;
 using MediatR;
 using Scalar.AspNetCore;
 
@@ -20,8 +21,9 @@ builder
     // API
     .AddAuth()
     // Infrastructure
+    .AddPostgres()
     .AddNeo4J()
-    .AddRepositories()
+    .AddNeo4JRepositories()
     // Application
     .AddMediatR()
     .AddFluentValidation();

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Genealogy.Application.Models;
-using Genealogy.Domain.Models;
+using Genealogy.Domain.Neo4j.Models;
 using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
 using Genealogy.Infrastructure.Neo4j.Services.Abstractions;
 using MediatR;

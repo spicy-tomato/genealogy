@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Genealogy.Domain\Genealogy.Domain.csproj" />
+      <ProjectReference Include="..\..\Genealogy.Domain\Genealogy.Domain.Neo4j\Genealogy.Domain.Neo4j.csproj" />
       <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj" />
     </ItemGroup>
 

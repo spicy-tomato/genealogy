@@ -1,4 +1,4 @@
-﻿namespace Genealogy.Domain.Enums;
+﻿namespace Genealogy.Domain.Neo4j.Enums;
 
 public enum Relationship
 {

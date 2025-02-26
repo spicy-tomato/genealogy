@@ -13,9 +13,9 @@ public static class DependencyInjection
 {
     public static WebApplicationBuilder AddNeo4J(this WebApplicationBuilder builder)
     {
-        string? uri = builder.Configuration["Neo4j:Uri"];
-        string? username = builder.Configuration["Neo4j:Username"];
-        string? password = builder.Configuration["Neo4j:Password"];
+        string? uri = builder.Configuration["Connections:Neo4j:Uri"];
+        string? username = builder.Configuration["Connections:Neo4j:Username"];
+        string? password = builder.Configuration["Connections:Neo4j:Password"];
         
         BoltGraphClient client = new(uri, username, password);
         client.JsonContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -26,7 +26,7 @@ public static class DependencyInjection
         return builder;
     }
 
-    public static WebApplicationBuilder AddRepositories(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddNeo4JRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
         builder.Services.AddScoped<IPersonRepository, PersonRepository>();

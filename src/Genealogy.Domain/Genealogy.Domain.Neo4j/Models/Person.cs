@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Genealogy.Domain.Models;
+namespace Genealogy.Domain.Neo4j.Models;
 
 [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public class Person

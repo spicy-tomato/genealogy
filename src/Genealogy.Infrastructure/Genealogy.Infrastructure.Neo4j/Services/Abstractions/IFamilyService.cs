@@ -1,5 +1,5 @@
-﻿using Genealogy.Domain.Enums;
-using Genealogy.Domain.Models;
+﻿using Genealogy.Domain.Neo4j.Enums;
+using Genealogy.Domain.Neo4j.Models;
 
 namespace Genealogy.Infrastructure.Neo4j.Services.Abstractions;
 

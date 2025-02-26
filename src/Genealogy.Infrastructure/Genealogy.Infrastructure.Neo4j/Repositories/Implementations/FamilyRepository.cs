@@ -1,4 +1,4 @@
-﻿using Genealogy.Domain.Models;
+﻿using Genealogy.Domain.Neo4j.Models;
 using Genealogy.Infrastructure.Exceptions;
 using Genealogy.Infrastructure.Neo4j.Dtos.Families;
 using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;

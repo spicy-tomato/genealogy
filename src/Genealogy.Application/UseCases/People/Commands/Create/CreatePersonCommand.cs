@@ -1,5 +1,5 @@
 ﻿using Genealogy.Application.Models;
-using Genealogy.Domain.Enums;
+using Genealogy.Domain.Neo4j.Enums;
 using MediatR;
 
 namespace Genealogy.Application.UseCases.People.Commands.Create;
