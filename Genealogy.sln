@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.API", "Genealogy.API\Genealogy.API.csproj", "{EFDF239D-BC80-4290-8DAA-B7C0B2112774}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.API", "src\Genealogy.API\Genealogy.API.csproj", "{EFDF239D-BC80-4290-8DAA-B7C0B2112774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Domain", "Genealogy.Domain\Genealogy.Domain.csproj", "{208FB63A-EAFB-46AA-AC20-7450D0CC41B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Domain", "src\Genealogy.Domain\Genealogy.Domain.csproj", "{208FB63A-EAFB-46AA-AC20-7450D0CC41B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Infrastructure", "Genealogy.Infrastructure\Genealogy.Infrastructure.csproj", "{06449AB0-CCB1-4DB0-BD1E-8E88F814F5D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Infrastructure", "src\Genealogy.Infrastructure\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj", "{06449AB0-CCB1-4DB0-BD1E-8E88F814F5D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Application", "Genealogy.Application\Genealogy.Application.csproj", "{44A8F7B0-DBAA-4267-BDE9-BB223DA4B63B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Application", "src\Genealogy.Application\Genealogy.Application.csproj", "{44A8F7B0-DBAA-4267-BDE9-BB223DA4B63B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88831EDE-CAA6-48C5-9AEA-102077739C7C}"
 	ProjectSection(SolutionItems) = preProject
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Web", "Genealogy.Web\Genealogy.Web.csproj", "{323EB335-8948-430C-A0ED-7C45C8829026}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Web", "src\Genealogy.Web\Genealogy.Web.csproj", "{323EB335-8948-430C-A0ED-7C45C8829026}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Genealogy.Infrastructure", "Genealogy.Infrastructure", "{AD63D6E1-27D2-4E2B-8C0A-C5C0672A6277}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,5 +43,8 @@ Global
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06449AB0-CCB1-4DB0-BD1E-8E88F814F5D1} = {AD63D6E1-27D2-4E2B-8C0A-C5C0672A6277}
 	EndGlobalSection
 EndGlobal

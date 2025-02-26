@@ -5,9 +5,9 @@
       context: .
       dockerfile: Genealogy.API/Dockerfile
 
-  database:
+  genealogy.neo4j:
     image: neo4j:5.26.2
-    container_name: genealogy.db
+    container_name: genealogy.neo4j
     ports:
       - "7474:7474"   # Neo4j Browser interface
       - "7687:7687"   # Bolt protocol for drivers
@@ -16,5 +16,22 @@
     volumes:
       - neo4j-data:/data
 
+  genealogy.postgres:
+    image: postgres:17.4-alpine
+    container_name: genealogy.postgres
+    shm_size: 128mb
+    ports:
+      - "54325:5432"
+    environment:
+      - POSTGRES_PASSWORD=example
+    volumes:
+      - genealogy-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   neo4j-data:
+  genealogy-pg-data:
