@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Genealogy.Infrastructure.Dtos.People;
+namespace Genealogy.Infrastructure.Neo4j.Dtos.People;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class UpdatePersonDto

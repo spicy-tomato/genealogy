@@ -1,14 +1,15 @@
 ﻿using JetBrains.Annotations;
 
-namespace Genealogy.Infrastructure.Dtos.People;
+namespace Genealogy.Infrastructure.Neo4j.Dtos.People;
 
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class GetRelatedPersonResult
 {
     public IEnumerable<GetRelatedPersonResultNode> Nodes { get; init; } = [];
     public IEnumerable<GetRelatedPersonResultLink> Links { get; init; } = [];
 }
 
-[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class GetRelatedPersonResultNode
 {
     public string Id { get; set; } = null!;
@@ -17,7 +18,7 @@ public class GetRelatedPersonResultNode
     public DateTime BirthDate { get; set; }
 }
 
-[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class GetRelatedPersonResultLink
 {
     public string Source { get; set; } = null!;

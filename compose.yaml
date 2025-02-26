@@ -5,6 +5,12 @@
       context: .
       dockerfile: Genealogy.API/Dockerfile
 
+  genealogy.web:
+    image: genealogy.web
+    build:
+      context: .
+      dockerfile: src/Genealogy.Web/Dockerfile
+
   genealogy.neo4j:
     image: neo4j:5.26.2
     container_name: genealogy.neo4j

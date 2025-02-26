@@ -9,8 +9,8 @@ using Genealogy.Application.UseCases.Families.Commands.Update;
 using Genealogy.Application.UseCases.People.Commands.Create;
 using Genealogy.Application.UseCases.People.Commands.Delete;
 using Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;
-using Genealogy.Infrastructure;
-using Genealogy.Infrastructure.Dtos.People;
+using Genealogy.Infrastructure.Neo4j;
+using Genealogy.Infrastructure.Neo4j.Dtos.People;
 using MediatR;
 using Scalar.AspNetCore;
 

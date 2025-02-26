@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Genealogy.Application.Models;
 using Genealogy.Domain.Models;
-using Genealogy.Infrastructure.Repositories.Abstractions;
-using Genealogy.Infrastructure.Services.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Services.Abstractions;
 using MediatR;
 
 namespace Genealogy.Application.UseCases.People.Commands.Create;

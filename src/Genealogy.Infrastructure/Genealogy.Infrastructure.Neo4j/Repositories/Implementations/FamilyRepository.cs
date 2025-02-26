@@ -1,21 +1,21 @@
 ﻿using Genealogy.Domain.Models;
-using Genealogy.Infrastructure.Dtos.Families;
 using Genealogy.Infrastructure.Exceptions;
-using Genealogy.Infrastructure.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Dtos.Families;
+using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
 using Neo4jClient;
 using Neo4jClient.Cypher;
 
-namespace Genealogy.Infrastructure.Repositories.Implementations;
+namespace Genealogy.Infrastructure.Neo4j.Repositories.Implementations;
 
 internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
 {
     public async Task<Family?> GetSingleByParentsIdAsync(string parentId)
     {
         ICypherFluentQuery<Family> query = client.Cypher
-            .OptionalMatch($"(person:Person)-[r:Parent]->(family:Family)")
+            .OptionalMatch("(person:Person)-[r:Parent]->(family:Family)")
             .Where<Person>(person => person.Id == parentId)
             .With("family")
-            .OptionalMatch($"(:Person)-[r:Parent]->(family)")
+            .OptionalMatch("(:Person)-[r:Parent]->(family)")
             .With("family, COUNT(r) as cnt")
             .Where("cnt = 1")
             .Return<Family>("family");
@@ -28,7 +28,7 @@ internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
     public async Task<Family?> GetByParentsIdAsync(string parentId1, string parentId2)
     {
         ICypherFluentQuery<Family>? query = client.Cypher
-            .OptionalMatch($"(p1:Person)-[:Parent]->(family:Family)<-[:Parent]-(p2:Person)")
+            .OptionalMatch("(p1:Person)-[:Parent]->(family:Family)<-[:Parent]-(p2:Person)")
             .Where<Person, Person>((p1, p2) => p1.Id == parentId1 && p2.Id == parentId2)
             .Return(family => family.As<Family>());
 
@@ -50,7 +50,7 @@ internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
         ICypherFluentQuery query = client.Cypher
             .Match("(person:Person)")
             .Where<Person>(person => person.Id == parentId)
-            .Create($"(person)-[:Parent]->(family:Family $family)")
+            .Create("(person)-[:Parent]->(family:Family $family)")
             .WithParam("family", family);
 
         await query.ExecuteWithoutResultsAsync();
@@ -66,7 +66,7 @@ internal class FamilyRepository(BoltGraphClient client) : IFamilyRepository
             .Match("(person:Person)", "(another:Person)")
             .Where<Person>(person => person.Id == personId)
             .AndWhere<Person>(another => another.Id == anotherId)
-            .Merge($"(person)-[:Parent]->(family:Family)<-[:Parent]-(another)")
+            .Merge("(person)-[:Parent]->(family:Family)<-[:Parent]-(another)")
             .OnCreate()
             .Set("family=$family")
             .WithParam("family", family);

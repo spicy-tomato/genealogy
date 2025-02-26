@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Web", "src\Geneal
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Genealogy.Infrastructure", "Genealogy.Infrastructure", "{AD63D6E1-27D2-4E2B-8C0A-C5C0672A6277}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genealogy.Infrastructure.Neo4j", "src\Genealogy.Infrastructure\Genealogy.Infrastructure.Neo4j\Genealogy.Infrastructure.Neo4j.csproj", "{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,8 +45,13 @@ Global
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{323EB335-8948-430C-A0ED-7C45C8829026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{06449AB0-CCB1-4DB0-BD1E-8E88F814F5D1} = {AD63D6E1-27D2-4E2B-8C0A-C5C0672A6277}
+		{1F5B9F1A-697D-4F79-8045-73A6C76AD7B9} = {AD63D6E1-27D2-4E2B-8C0A-C5C0672A6277}
 	EndGlobalSection
 EndGlobal

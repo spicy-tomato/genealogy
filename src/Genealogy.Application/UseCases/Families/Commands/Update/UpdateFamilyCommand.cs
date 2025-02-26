@@ -1,5 +1,5 @@
 ﻿using Genealogy.Application.Models;
-using Genealogy.Infrastructure.Dtos.Families;
+using Genealogy.Infrastructure.Neo4j.Dtos.Families;
 using MediatR;
 
 namespace Genealogy.Application.UseCases.Families.Commands.Update;

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Genealogy.Infrastructure.Dtos.Families;
+namespace Genealogy.Infrastructure.Neo4j.Dtos.Families;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class UpdateFamilyDto

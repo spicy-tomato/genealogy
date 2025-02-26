@@ -1,11 +1,11 @@
 ﻿using Genealogy.Domain.Models;
-using Genealogy.Infrastructure.Dtos.People;
 using Genealogy.Infrastructure.Exceptions;
-using Genealogy.Infrastructure.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Dtos.People;
+using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
 using Neo4jClient;
 using Neo4jClient.Cypher;
 
-namespace Genealogy.Infrastructure.Repositories.Implementations;
+namespace Genealogy.Infrastructure.Neo4j.Repositories.Implementations;
 
 internal class PersonRepository(BoltGraphClient client) : IPersonRepository
 {
@@ -104,7 +104,7 @@ internal class PersonRepository(BoltGraphClient client) : IPersonRepository
             .Match("(person:Family)")
             .Where<Family>(person => person.Id == existingPerson.Id)
             .Set("person.name=$name, person.birthDate=$birthDate")
-            .WithParams(new Dictionary<string, object>()
+            .WithParams(new Dictionary<string, object>
             {
                 { "name", updatePersonDto.Name },
                 { "birthDate", updatePersonDto.BirthDate }

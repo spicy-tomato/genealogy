@@ -1,7 +1,7 @@
 ﻿using Genealogy.Domain.Enums;
 using Genealogy.Domain.Models;
 
-namespace Genealogy.Infrastructure.Services.Abstractions;
+namespace Genealogy.Infrastructure.Neo4j.Services.Abstractions;
 
 public interface IFamilyService
 {

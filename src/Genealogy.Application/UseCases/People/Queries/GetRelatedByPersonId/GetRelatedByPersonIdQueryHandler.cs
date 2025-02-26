@@ -1,9 +1,9 @@
 using FluentValidation;
 using Genealogy.Application.Models;
 using Genealogy.Domain.Models;
-using Genealogy.Infrastructure.Dtos.People;
 using Genealogy.Infrastructure.Exceptions;
-using Genealogy.Infrastructure.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Dtos.People;
+using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
 using MediatR;
 
 namespace Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;

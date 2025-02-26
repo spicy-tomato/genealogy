@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure.Neo4j\Genealogy.Infrastructure.Neo4j.csproj" />
       <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj" />
     </ItemGroup>
 

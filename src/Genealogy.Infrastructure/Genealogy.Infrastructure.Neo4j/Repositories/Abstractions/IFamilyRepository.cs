@@ -1,7 +1,7 @@
 ﻿using Genealogy.Domain.Models;
-using Genealogy.Infrastructure.Dtos.Families;
+using Genealogy.Infrastructure.Neo4j.Dtos.Families;
 
-namespace Genealogy.Infrastructure.Repositories.Abstractions;
+namespace Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
 
 public interface IFamilyRepository : IRepository
 {

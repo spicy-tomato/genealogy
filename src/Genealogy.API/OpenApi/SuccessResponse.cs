@@ -1,5 +1,8 @@
-﻿namespace Genealogy.API.OpenApi;
+﻿using JetBrains.Annotations;
 
+namespace Genealogy.API.OpenApi;
+
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public abstract class SuccessResponse<T>
 {
     public T Data { get; init; } = default!;

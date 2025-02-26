@@ -1,5 +1,5 @@
 ﻿using Genealogy.Application.Models;
-using Genealogy.Infrastructure.Dtos.People;
+using Genealogy.Infrastructure.Neo4j.Dtos.People;
 using MediatR;
 
 namespace Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;

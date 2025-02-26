@@ -1,14 +1,14 @@
 ﻿using Genealogy.Domain.Models;
 using Genealogy.Infrastructure.Exceptions;
-using Genealogy.Infrastructure.Repositories.Abstractions;
-using Genealogy.Infrastructure.Repositories.Implementations;
-using Genealogy.Infrastructure.Services.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Repositories.Implementations;
+using Genealogy.Infrastructure.Neo4j.Services.Abstractions;
 using Microsoft.Extensions.Logging;
 using Neo4jClient;
 using Neo4jClient.Transactions;
 using Relationship = Genealogy.Domain.Enums.Relationship;
 
-namespace Genealogy.Infrastructure.Services.Implementations;
+namespace Genealogy.Infrastructure.Neo4j.Services.Implementations;
 
 internal class FamilyService(BoltGraphClient client, IFamilyRepository familyRepository,
     IPersonRepository personRepository,

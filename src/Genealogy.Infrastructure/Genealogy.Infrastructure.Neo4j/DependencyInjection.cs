@@ -1,13 +1,13 @@
-﻿using Genealogy.Infrastructure.Repositories.Abstractions;
-using Genealogy.Infrastructure.Repositories.Implementations;
-using Genealogy.Infrastructure.Services.Abstractions;
-using Genealogy.Infrastructure.Services.Implementations;
+﻿using Genealogy.Infrastructure.Neo4j.Repositories.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Repositories.Implementations;
+using Genealogy.Infrastructure.Neo4j.Services.Abstractions;
+using Genealogy.Infrastructure.Neo4j.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Neo4jClient;
 using Newtonsoft.Json.Serialization;
 
-namespace Genealogy.Infrastructure;
+namespace Genealogy.Infrastructure.Neo4j;
 
 public static class DependencyInjection
 {
