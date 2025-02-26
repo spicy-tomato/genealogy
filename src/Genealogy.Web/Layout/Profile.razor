@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<AuthorizeView>
+    <Authorized>
+        <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+            <ActivatorContent>
+                <MudAvatar Size="Size.Medium" Color="Color.Secondary">@AvatarLetter</MudAvatar>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem Label="My information"/>
+                <MudMenuItem Label="Log out" @onclick="SignOut"/>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+
+    <NotAuthorized>
+        <MudButton Href="@("/authentication/" + RemoteAuthenticationActions.LogIn)"
+            StartIcon="@Icons.Material.Filled.Login" Color="Color.Secondary" Variant="Variant.Filled"
+        >
+            Login
+        </MudButton>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    // [CascadingParameter]
+    private string? UserName { get; set; } = "An";
+
+    private char? AvatarLetter => (UserName ?? string.Empty).Split(' ').LastOrDefault()?.FirstOrDefault();
+
+    private async Task SignOut()
+    {
+        // This clears the local state (tokens, etc.)
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout", true);
+    }
+
+}

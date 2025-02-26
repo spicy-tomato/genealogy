@@ -1,8 +1,4 @@
 ﻿@page "/"
-@using System.Security.Claims
-@using System.Security.Principal
-@using Microsoft.AspNetCore.Components.Authorization
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Home</PageTitle>
 
@@ -10,69 +6,5 @@
 
 Welcome to your new app.
 
-@if (!_hasRunInit)
-{
-  <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
-}
-else if (_identity != null)
-{
-  <ul>
-    <li>@_identity?.Name</li>
-    <li>@_identity?.AuthenticationType</li>
-    <li>@_identity?.IsAuthenticated</li>
-  </ul>
-}
-else
-{
-  <div>Not logged in</div>
-}
-
 @code {
-  private bool _hasRunInit;
-  private IIdentity? _identity;
-
-  protected override async Task OnInitializedAsync()
-  {
-    AuthenticationStateProvider.AuthenticationStateChanged += OnAuthenticationStateChanged;
-
-    // If the user is authenticated and reloads the page in the browser, the event won't trigger so we can do the initial load here.
-    ClaimsPrincipal user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
-
-    if (user.Identity is { IsAuthenticated: true })
-    {
-      _hasRunInit = true;
-      _identity = user.Identity;
-    }
-  }
-
-  private async void OnAuthenticationStateChanged(Task<AuthenticationState> task)
-  {
-    try
-    {
-      ClaimsPrincipal user = (await task).User;
-
-      if (user.Identity is not { IsAuthenticated: true })
-      {
-        return;
-      }
-
-      _identity = user.Identity;
-
-      if (!_hasRunInit)
-      {
-        _hasRunInit = true;
-
-        Console.WriteLine(DateTime.Now.ToString("hh:mm:ss:fff") + " CascadingAppStateProvider -> OnInitializedAsync -> InitUser");
-      }
-      else
-      {
-        Console.WriteLine(DateTime.Now.ToString("hh:mm:ss:fff") + " InitialDataLoader -> OnInitializedAsync -> Init has already been triggered!");
-      }
-    }
-    catch (Exception)
-    {
-      // 
-    }
-  }
-
 }
