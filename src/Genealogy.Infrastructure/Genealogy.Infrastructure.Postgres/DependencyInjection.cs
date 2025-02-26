@@ -1,4 +1,5 @@
-﻿using Genealogy.Infrastructure.Postgres.Persistence;
+﻿using Genealogy.Infrastructure.Postgres.Options;
+using Genealogy.Infrastructure.Postgres.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +18,12 @@ public static class DependencyInjection
                 Host = builder.Configuration["Connections:Postgres:Host"],
                 Port = int.Parse(builder.Configuration["Connections:Postgres:Port"]!),
                 Username = builder.Configuration["Connections:Postgres:Username"],
-                Database = builder.Configuration["Connections:Postgres:Database"]
+                Password = builder.Configuration["Connections:Postgres:Password"]
             };
             options.UseNpgsql(connection.ConnectionString);
         });
+
+        builder.Services.Configure<WhiteList>(builder.Configuration.GetSection("WhiteList"));
 
         return builder;
     }

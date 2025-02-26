@@ -12,7 +12,9 @@ using Genealogy.Application.UseCases.People.Queries.GetRelatedByPersonId;
 using Genealogy.Infrastructure.Neo4j;
 using Genealogy.Infrastructure.Neo4j.Dtos.People;
 using Genealogy.Infrastructure.Postgres;
+using Genealogy.Infrastructure.Postgres.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -38,6 +40,13 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddOpenApi();
 
 WebApplication app = builder.Build();
+ 
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    PgDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<PgDbContext>();
+    await applicationDbContext.Database.MigrateAsync();
+    await applicationDbContext.Database.EnsureCreatedAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {
