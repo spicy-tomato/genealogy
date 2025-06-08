@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿namespace Genealogy.Domain.Neo4j.Models;
 
-namespace Genealogy.Domain.Neo4j.Models;
-
-[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public class Family
 {
     public Family()

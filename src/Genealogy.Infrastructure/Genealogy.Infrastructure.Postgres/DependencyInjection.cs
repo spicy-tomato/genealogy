@@ -1,4 +1,4 @@
-﻿using Genealogy.Infrastructure.Postgres.Options;
+﻿using Genealogy.Domain.Postgres.Models;
 using Genealogy.Infrastructure.Postgres.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,9 @@ public static class DependencyInjection
             options.UseNpgsql(connection.ConnectionString);
         });
 
-        builder.Services.Configure<WhiteList>(builder.Configuration.GetSection("WhiteList"));
+        builder.Services
+            .AddDefaultIdentity<User>()
+            .AddEntityFrameworkStores<PgDbContext>();
 
         return builder;
     }

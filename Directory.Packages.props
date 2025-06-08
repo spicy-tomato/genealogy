@@ -1,0 +1,28 @@
+﻿<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="FirebaseAdmin" Version="3.2.0" />
+    <PackageVersion Include="FluentValidation" Version="12.0.0" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+    <PackageVersion Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageVersion Include="MediatR" Version="12.5.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageVersion Include="Neo4jClient" Version="5.1.20" />
+    <PackageVersion Include="Npgsql" Version="9.0.3" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.4.7" />
+  </ItemGroup>
+</Project>

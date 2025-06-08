@@ -1,23 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
-        <PackageReference Include="Neo4jClient" Version="5.1.20" />
+      <ProjectReference Include="..\..\Genealogy.Domain\Genealogy.Domain.Neo4j\Genealogy.Domain.Neo4j.csproj" />
+      <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Genealogy.Domain\Genealogy.Domain.Neo4j\Genealogy.Domain.Neo4j.csproj" />
-      <ProjectReference Include="..\Genealogy.Infrastructure\Genealogy.Infrastructure.csproj" />
+      <PackageReference Include="JetBrains.Annotations" />
+      <PackageReference Include="Neo4jClient" />
     </ItemGroup>
 
 </Project>

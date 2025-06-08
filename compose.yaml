@@ -41,3 +41,4 @@
 volumes:
   neo4j-data:
   genealogy-pg-data:
+

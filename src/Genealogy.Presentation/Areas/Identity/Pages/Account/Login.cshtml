@@ -1,0 +1,110 @@
+﻿@page
+@using Genealogy.Presentation.Auth
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr/>
+            @{
+                <div id="external-account" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (LoginMethod loginMethod in Model.LoginMethods)
+                            {
+                                <button type="button" class="btn btn-primary" data-login-method="@loginMethod"
+                                    title="Log in using your @loginMethod account"
+                                >
+                                    @loginMethod
+                                </button>
+                            }
+                        </p>
+                    </div>
+                </div>}
+        </section>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js';
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+        } from 'https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js';
+
+        async function login(loginMethod) {
+            const provider = getProvider(loginMethod);
+            try {
+                const auth = getAuth();
+                await signInWithPopup(auth, provider);
+                // const credential = await getCredentialFromResult(result, loginMethod);
+                const token = await auth.currentUser.getIdToken(true);
+
+                // Send token to .NET backend
+                const response = await fetch('/Identity/Account/ExternalLogin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value,
+                    },
+                    body: JSON.stringify({ idToken: token }),
+                });
+
+                if (response.ok) {
+                    window.location.href = '/';
+                } else {
+                    const err = await response.json();
+                    alert('Login failed: ' + err.error);
+                }
+            } catch (error) {
+                console.error('Google sign-in error:', error.message);
+                alert('Login failed.');
+            }
+        }
+
+        function getProvider(loginMethod) {
+            if (loginMethod === 'Google') {
+                return new GoogleAuthProvider();
+            }
+        }
+
+        function getCredentialFromResult(result, loginMethod) {
+            if (loginMethod === 'Google') {
+                return GoogleAuthProvider.credentialFromResult(result);
+            }
+        }
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyDU3HB2dQp6IADcH6_FYNcfn-_vxSW5Q7w',
+            authDomain: 'genealogy-3280d.firebaseapp.com',
+            projectId: 'genealogy-3280d',
+            storageBucket: 'genealogy-3280d.firebasestorage.app',
+            messagingSenderId: '702050127108',
+            appId: '1:702050127108:web:7821ddc669288a53ec9451',
+            measurementId: 'G-HDWVR5QTP2',
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('#external-account button')
+                .forEach((button) => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        login(button.dataset.loginMethod);
+                    });
+                });
+        });
+
+    </script>
+}

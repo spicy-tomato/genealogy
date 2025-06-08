@@ -5,7 +5,6 @@ using Genealogy.Infrastructure.Neo4j.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Neo4jClient;
-using Newtonsoft.Json.Serialization;
 
 namespace Genealogy.Infrastructure.Neo4j;
 
@@ -18,7 +17,6 @@ public static class DependencyInjection
         string? password = builder.Configuration["Connections:Neo4j:Password"];
         
         BoltGraphClient client = new(uri, username, password);
-        client.JsonContractResolver = new CamelCasePropertyNamesContractResolver();
         client.ConnectAsync();
         
         builder.Services.AddSingleton(client);
